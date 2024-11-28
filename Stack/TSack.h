@@ -28,21 +28,6 @@ public:
 	T Top() const; //посмотреть на вершинку стека
 	void Clear();
 	bool Check(std::string str);
-	friend istream& operator>>(istream& in, TStack& s) //ввод элемента
-	{
-		if (this->isFull())
-			throw - 1;
-		Num++;
-		in >> s.pMem[Num];
-		return in;
-	}
-	friend ostream& operator<<(ostream& out, const TStack& s) 
-	{
-		if (this->isEmpty())
-			throw - 1;
-		out << s.pMem[Num];
-		return out;
-	}
 };
 template <class T>
 TStack<T>::TStack(int _MaxSize)
