@@ -178,3 +178,145 @@ TEST(TStack, clear_works_correctly_on_non_empty_stack)
 	EXPECT_TRUE(a.Empty());
 	EXPECT_ANY_THROW(a.Pop());
 }
+
+/////////////////////////
+
+TEST(TCalc, can_create_postfix) {
+	TCalc c;
+	c.SetInfix("1+6-4");
+	EXPECT_NO_THROW(c.ToPostfix());
+	c.ToPostfix();
+	EXPECT_EQ(c.GetPostfix(), "1 6 + 4 - ");
+}
+TEST(TCalc, can_not_create_wrong_postfix) {
+	TCalc c;
+	c.SetInfix("5*2))");
+	EXPECT_ANY_THROW(c.ToPostfix());
+	c.SetInfix("((6+3");
+	EXPECT_ANY_THROW(c.ToPostfix());
+}
+TEST(TCalc, can_add_numbers)
+{
+	TCalc c;
+	c.SetInfix("1+3");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 4);
+	c.SetInfix("9+8");
+	EXPECT_EQ(c.Calc(), 17);
+}
+TEST(TCalc, can_subtract_numbers)
+{
+	TCalc c;
+	c.SetInfix("6-3");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 3);
+	c.SetInfix("8-9");
+	EXPECT_EQ(c.Calc(), -1);
+}
+TEST(TCalc, can_multiply_numbers)
+{
+	TCalc c;
+	c.SetInfix("6*3");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 18);
+	c.SetInfix("5*2");
+	EXPECT_EQ(c.Calc(), 10);
+}
+TEST(TCalc, can_divide_numbers)
+{
+	TCalc c;
+	c.SetInfix("6/3");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 2);
+	c.SetInfix("6/4");
+	EXPECT_EQ(c.Calc(), 1.5);
+}
+TEST(TCalc, can_raises_a_number_to_a_power)
+{
+	TCalc c;
+	c.SetInfix("2^10");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 1024);
+	c.SetInfix("2^6");
+	EXPECT_EQ(c.Calc(), 64);
+}
+TEST(TCalc, can_perform_arithmetic_expressions)
+{
+	TCalc c;
+	c.SetInfix("6^3*5+2-1");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 1081);
+	c.SetInfix("5-2+(6-3)^3+6/4+5*2");
+	EXPECT_EQ(c.Calc(), 41.5);
+}
+TEST(TCalc, throws_when_dividing_by_zero) {
+	TCalc c;
+	c.SetInfix("6/0");
+	c.ToPostfix();
+	EXPECT_ANY_THROW(c.CalcPostfix());
+	c.SetInfix("3/0");
+	EXPECT_ANY_THROW(c.Calc());
+}
+TEST(TCalc, can_work_with_unary_minus) {
+	TCalc c;
+	c.SetInfix("-2+5");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 3);
+	c.SetInfix("-6+3");
+	EXPECT_EQ(c.Calc(), -3);
+}
+TEST(TCalc, throws_when_invalid_expression) {
+	TCalc c;
+	c.SetInfix("+");
+	c.ToPostfix();
+	EXPECT_ANY_THROW(c.CalcPostfix());
+	c.SetInfix("9+*3");
+	c.ToPostfix();
+	EXPECT_ANY_THROW(c.CalcPostfix());
+	c.SetInfix("6*");
+	c.ToPostfix();
+	EXPECT_ANY_THROW(c.CalcPostfix());
+
+	c.SetInfix("2+7A5");
+	EXPECT_ANY_THROW(c.Calc());
+	c.SetInfix("8*6))");
+	EXPECT_ANY_THROW(c.Calc());
+	c.SetInfix("((5+5");
+	EXPECT_ANY_THROW(c.Calc());
+
+	c.SetInfix("+");
+	EXPECT_ANY_THROW(c.Calc());
+	c.SetInfix("9+*3");
+	EXPECT_ANY_THROW(c.Calc());
+	c.SetInfix("8*");
+	EXPECT_ANY_THROW(c.Calc());
+}
+TEST(TCalc, can_divide_positive_numbers) {
+	TCalc c;
+	c.SetInfix("5/2");
+	EXPECT_DOUBLE_EQ(c.Calc(), 2.5);
+}
+TEST(TCalc, can_add_positive_decimal_and_integer) {
+	TCalc c;
+	c.SetInfix("3.14+5");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 8.14);
+}
+TEST(TCalc, can_multiply_two_positive_numbers) {
+	TCalc c;
+	c.SetInfix("2.5*4");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 10.0);
+}
+TEST(TCalc, can_raise_decimal_to_power) {
+	TCalc c;
+	c.SetInfix("2.5^3");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 15.625);
+}
+TEST(TCalc, can_raise_decimal_to_fractional_power) {
+	TCalc c;
+	c.SetInfix("4.0^0.5");
+	c.ToPostfix();
+	EXPECT_EQ(c.CalcPostfix(), 2.0);
+}
