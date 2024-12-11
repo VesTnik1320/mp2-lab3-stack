@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <iostream>
 #include <vector>
 #include <set>
@@ -13,19 +13,19 @@ class TStack
 	T* pMem;
 	int MaxSize, Num;
 public:
-	TStack(int _MaxSize = 10); //конструктор инициализации
-	~TStack(); //деструктор
-	TStack(const TStack& s); //конструктор копирования
-	int GetSize() { return MaxSize; } // размер стека
-	int GetStartIndex() { return Num; } // индекс Num
-	TStack& operator=(const TStack<T> s); //оператор присваивания
+	TStack(int _MaxSize = 10); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
+	~TStack(); //РґРµСЃС‚СЂСѓРєС‚РѕСЂ
+	TStack(const TStack& s); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+	int GetSize() { return MaxSize; } // СЂР°Р·РјРµСЂ СЃС‚РµРєР°
+	int GetStartIndex() { return Num; } // РёРЅРґРµРєСЃ Num
+	TStack& operator=(const TStack<T> s); //РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
 	bool operator==(const TStack& s) const; 
 	bool operator!=(const TStack& s) const; 
-	T Pop(); //извлечение элемента из стека
-	void Push(T val); //добавление элемента в стек
-	bool Empty() const; // проверка на пустоту Num = -1
-	bool Full() const; // проверка на полноту Nun = MaxSize-1
-	T Top() const; //посмотреть на вершинку стека
+	T Pop(); //РёР·РІР»РµС‡РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РёР· СЃС‚РµРєР°
+	void Push(T val); //РґРѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РІ СЃС‚РµРє
+	bool Empty() const; // РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ Num = -1
+	bool Full() const; // РїСЂРѕРІРµСЂРєР° РЅР° РїРѕР»РЅРѕС‚Сѓ Nun = MaxSize-1
+	T Top() const; //РїРѕСЃРјРѕС‚СЂРµС‚СЊ РЅР° РІРµСЂС€РёРЅРєСѓ СЃС‚РµРєР°
 	void Clear();
 	bool Check(std::string str);
 };
@@ -197,7 +197,7 @@ double TCalc::CalcPostfix() {
 	std::string number = "";
 	for (int i = 0; i < postfix.length(); i++) {
 		if (postfix[i] >= '0' && postfix[i] <= '9' || postfix[i] == '.' || postfix[i] == '_') {
-			if (postfix[i] == '_') { // Обработка отрицательного числа
+			if (postfix[i] == '_') { // РћР±СЂР°Р±РѕС‚РєР° РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРіРѕ С‡РёСЃР»Р°
 				number += '-';
 			}
 			else {
@@ -205,7 +205,7 @@ double TCalc::CalcPostfix() {
 			}
 		}
 		else if (postfix[i] == ' ' && !number.empty()) {
-			// Когда число завершено, преобразуем его в double
+			// РљРѕРіРґР° С‡РёСЃР»Рѕ Р·Р°РІРµСЂС€РµРЅРѕ, РїСЂРµРѕР±СЂР°Р·СѓРµРј РµРіРѕ РІ double
 			StNum.Push(stod(number));
 			number = "";
 		}
