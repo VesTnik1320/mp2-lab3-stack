@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../Stack/TSack.h"
+#include "../Stack/TSack2.h"
 
 TEST(TStack, Can_create_stack_with_positive_size) {
 	ASSERT_NO_THROW(TStack<int> a(10));

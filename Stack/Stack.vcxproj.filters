@@ -23,5 +23,8 @@
     <ClInclude Include="TSack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TSack2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
