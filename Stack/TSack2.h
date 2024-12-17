@@ -10,7 +10,7 @@
 template <class T>
 struct Node {
     T data; //значение узла
-    Node* next; // указатель на некст узел
+    Node* pNext; // указатель на некст узел
 };
 template <class T>
 class TStack {
@@ -30,7 +30,7 @@ public:
     bool Empty() const;
     bool Full() const;
     T Top() const;
-    void Clear(); // тот же деструктор
+    void Clear();
     bool Check(const std::string& str);
 };
 template <class T>
@@ -42,9 +42,7 @@ TStack<T>::TStack(size_t size) : maxSize(size), currentSize(0), top(nullptr) {
 }
 template <class T>
 TStack<T>::~TStack() {
-    while (!Empty()) {
-        Pop();
-    }
+    Clear();
 }
 template <class T>
 TStack<T>::TStack(const TStack<T>& s) : maxSize(s.maxSize), currentSize(s.currentSize), top(nullptr) {
@@ -53,20 +51,20 @@ TStack<T>::TStack(const TStack<T>& s) : maxSize(s.maxSize), currentSize(s.curren
     }
     else {
         Node<T>* current = s.top;
-        Node<T>* last = nullptr;
+        Node<T>* pLast = nullptr;
         while (current != nullptr) {
-            Node<T>* newNode = new Node<T>;
-            newNode->data = current->data;
-            newNode->next = nullptr;
+            Node<T>* tmp = new Node<T>;
+            tmp->data = current->data;
+            tmp->pNext = nullptr;
 
-            if (last == nullptr) {
-                top = newNode;
+            if (pLast == nullptr) {
+                top = tmp;
             }
             else {
-                last->next = newNode;
+                pLast->pNext = tmp;
             }
-            last = newNode;
-            current = current->next;
+            pLast = tmp;
+            current = current->pNext;
         }
     }
 }
@@ -82,21 +80,21 @@ TStack<T>& TStack<T>::operator=(const TStack<T>& s) {
     }
     else {
         Node<T>* current = s.top;
-        Node<T>* last = nullptr;
+        Node<T>* pLast = nullptr;
         while (current != nullptr) {
-            Node<T>* newNode = new Node<T>;
-            newNode->data = current->data;
-            newNode->next = nullptr;
+            Node<T>* tmp = new Node<T>;
+            tmp->data = current->data;
+            tmp->pNext = nullptr;
 
-            if (last == nullptr) {
-                top = newNode;
+            if (pLast == nullptr) {
+                top = tmp;
             }
             else {
-                last->next = newNode;
+                pLast->pNext = tmp;
             }
 
-            last = newNode;
-            current = current->next;
+            pLast = tmp;
+            current = current->pNext;
         }
     }
     return *this;
@@ -115,8 +113,8 @@ bool TStack<T>::operator==(const TStack<T>& s) const {
         if (current1->data != current2->data) {
             return false;
         }
-        current1 = current1->next;
-        current2 = current2->next;
+        current1 = current1->pNext;
+        current2 = current2->pNext;
     }
 
     return true;
@@ -129,20 +127,20 @@ template <class T>
 void TStack<T>::Push(T val) {
     if (Full())
         throw - 1;
-    Node<T>* newNode = new Node<T>;
-    newNode->data = val;
-    newNode->next = top;
-    top = newNode;
+    Node<T>* tmp = new Node<T>;
+    tmp->data = val;
+    tmp->pNext = top;
+    top = tmp;
     currentSize++;
 }
 template <class T>
 T TStack<T>::Pop() {
     if (Empty())
         throw - 1;
-    Node<T>* temp = top;
+    Node<T>* tmp = top;
     T value = top->data;
-    top = top->next;
-    delete temp;
+    top = top->pNext;
+    delete tmp;
     currentSize--;
     return value;
 }
@@ -390,4 +388,3 @@ double TCalc::Calc() {
         throw - 1;
     return a;
 }
-
